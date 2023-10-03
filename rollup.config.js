@@ -7,6 +7,7 @@ import livereload from 'rollup-plugin-livereload';
 import css from 'rollup-plugin-css-only';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
+import { readFileSync } from 'fs'
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -73,7 +74,13 @@ export default {
 
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
-		!production && livereload('public'),
+		!production && livereload({
+			watch: 'public',
+			https: {
+				key:  readFileSync( 'localhost-key.pem'),
+				cert: readFileSync('localhost.pem'),
+			},
+		}),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify

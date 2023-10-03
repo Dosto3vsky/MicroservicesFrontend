@@ -16,6 +16,8 @@
             "desc": desc,
             "price": price,
             "active": active
+        }, {
+            withCredentials: true
         })
 
         console.log(res)

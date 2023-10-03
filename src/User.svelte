@@ -23,6 +23,8 @@
         const res = await axios.post('https://api.rentwave.live/user/login', {
             "username": username,
             "password": password
+        }, {
+            withCredentials: true
         })
 
         console.log(res)
