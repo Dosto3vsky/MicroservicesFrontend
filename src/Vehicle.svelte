@@ -25,7 +25,6 @@
             withCredentials: true
         })
 
-        console.log(res)
         name = ''
         type = ''
         desc = ''
@@ -40,8 +39,6 @@
         })
 
         toggleId = ''
-
-        console.log(res)
     }
 
     onMount(async () => {
@@ -113,6 +110,7 @@
                 <p>{listing.type}</p>
                 <p>${listing.price} per day</p>
                 <p>{listing.desc}</p>
+                <p>Active: {listing.active}</p>
             </div>
        {/each} 
     </fieldset>

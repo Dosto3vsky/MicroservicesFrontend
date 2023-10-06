@@ -1,9 +1,22 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+
     export let type: string = 'text';
-    export let value = (type === 'text' ? '' : null);
+    export let value;
     export let error: string = '';
     export let label: string = '';
     export let placeholder: string = '';
+
+    onMount(() => {
+      if (type === 'text')
+      {
+        value = '' as string
+      }
+      else
+      {
+        value = null as number
+      }
+    })
 
     function handleInput({ target: t }) {
         if (type === 'number') {
