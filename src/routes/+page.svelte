@@ -76,7 +76,7 @@
 	.root {
 		min-height: 100vh;
 		background: linear-gradient(180deg, rgba(28, 28, 225, 0) 0%, rgba(0, 0, 26, 0.87) 77.08%), linear-gradient(0deg, rgba(6, 12, 71, 0.3), rgba(6, 12, 71, 0.3)), url("$lib/images/background.jpeg");
-		background-size: 100% 1080px;
+		background-size: cover;
 		display: flex;
 		justify-content: center;
 		align-items: center;
