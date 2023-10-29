@@ -4,11 +4,13 @@
 	import { onMount } from 'svelte';
 	import Navbar from '$lib/components/Navbar';
 	import DoubleRangeSlider from '$lib/shared/ui/DoubleRangeSlider';
+	import { PUBLIC_GATEWAY_URL } from "$env/static/public"
+
 
 	let searchValue = '';
     let searchType = 'book';
 
-	let ads : any[] = [];
+	let ads : any  = {books: []};
 
     let priceStart = 0;
     let priceEnd = 1;
@@ -25,7 +27,13 @@
 
     // Handler for search event sent from navbar
     const search = async (event: CustomEvent) => {
-        ads = (await axios.get(`https://api.rentwave.live/${searchType}/list/active`)).data;
+        ads = (await axios.get(`${PUBLIC_GATEWAY_URL}/${searchType}/search`, {
+            params: {
+                "q": event.detail,
+                "minPrice": formatSliderLabel(priceStart, priceFactor),
+                "maxPrice": formatSliderLabel(priceEnd, priceFactor),
+            }
+        })).data;
         searchValue = event.detail;
         console.log(ads);
     }
@@ -36,7 +44,7 @@
     }
 
 	onMount(async () => {
-        ads = (await axios.get(`https://api.rentwave.live/${searchType}/list/active`)).data;
+        ads = (await axios.get(`${PUBLIC_GATEWAY_URL}/${searchType}/list/active`)).data;
         console.log(ads);
 	});
 </script>
@@ -104,11 +112,9 @@
             {/if}
 
             <div class="grid grid-cols-5 gap-4">
-                {#if ads.length > 0}
-                    {#each ads as ad}
-                        {#each ad.Details as detailItem}
-                            <AdCards title={ad.Title} description={detailItem.Description}/>
-                        {/each}
+                {#if ads.books.length > 0}
+                    {#each ads.books as ad}
+                        <AdCards isbn={ad.Book.Isbn} title={ad.Book.Title} description={ad.Description} id={ad.ID} />
                     {/each}
                 {:else}
                     No Results Found

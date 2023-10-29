@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Logo from '$lib/images/logo.jpeg';
     import NotificationBell from '$lib/images/Notification Bell.png'
     import Profile from '$lib/images/Profile.png'
     import Search from '$lib/images/Search.png'
+    import Upload from '$lib/images/Upload_fill.png'
 	import { createEventDispatcher } from 'svelte';
 
     let searchType  = 'book';
@@ -44,8 +46,9 @@
     </div>
 
     <div class="actions">
+        <img src={Upload} alt="Upload" on:click={() => goto(`/add/${searchType}`)} />
         <img src={NotificationBell} alt="Notifications" />
-        <img src={Profile} alt="Notifications" />
+        <img src={Profile} alt="Profile" />
     </div>
 </div>
 

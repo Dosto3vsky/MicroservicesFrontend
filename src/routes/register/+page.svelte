@@ -3,13 +3,12 @@
 	import Input from "$lib/shared/ui/Input/Input.svelte";
 	import logo from "$lib/images/favicon.jpeg";
 	import axios from "axios"
+	import { PUBLIC_GATEWAY_URL } from "$env/static/public"
+
 
 	let username : string = ""
 	let password : string = ""
     let error = "";
-
-	$: console.log(username)
-	$: console.log(password)
 
 	async function LoginHandler(event : Event) {
 		event.preventDefault();
@@ -17,7 +16,7 @@
 
         let res;
         try {
-            res = await axios.post("https://api.rentwave.live/user/register", {
+            res = await axios.post(`${PUBLIC_GATEWAY_URL}/user/register`, {
 			username: username,
 			password: password
             }, {

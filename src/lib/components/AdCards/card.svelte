@@ -1,12 +1,14 @@
 <script lang="ts">
-export let imageURL:string = ""
-export let title:string = "Advertisements"
-export let description:string = ""
+    export let imageURL:string = "https://upload.wikimedia.org/wikipedia/en/d/dc/A_Song_of_Ice_and_Fire_book_collection_box_set_cover.jpg"
+    export let title = "Advertisements"
+    export let description = ""
+    export let isbn = ""
+    export let id;
 </script>
 
 <div class="ad-card">
     <img class="ad-image" src={imageURL} alt="Ad">
-    <div class="ad-title">{title}</div>
+    <div class="ad-title">{title} - <span class="text-gray-500 font-normal">{isbn}</span></div>
     <div class="ad-details">{description}</div>
 </div>
 
