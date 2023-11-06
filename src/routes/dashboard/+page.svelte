@@ -27,13 +27,19 @@
 
     // Handler for search event sent from navbar
     const search = async (event: CustomEvent) => {
-        ads = (await axios.get(`${PUBLIC_GATEWAY_URL}/${searchType}/search`, {
-            params: {
-                "q": event.detail,
-                "minPrice": formatSliderLabel(priceStart, priceFactor),
-                "maxPrice": formatSliderLabel(priceEnd, priceFactor),
-            }
-        })).data;
+        if(event.detail !== '') {
+            ads = (await axios.get(`${PUBLIC_GATEWAY_URL}/${searchType}/search`, {
+                params: {
+                    "q": event.detail,
+                    "minPrice": formatSliderLabel(priceStart, priceFactor),
+                    "maxPrice": formatSliderLabel(priceEnd, priceFactor),
+                }
+            })).data;
+        }
+        else {
+            ads = (await axios.get(`${PUBLIC_GATEWAY_URL}/${searchType}/list/active`)).data;
+        }
+        
         searchValue = event.detail;
         console.log(ads);
     }
@@ -114,7 +120,7 @@
             <div class="grid grid-cols-5 gap-4">
                 {#if ads.books.length > 0}
                     {#each ads.books as ad}
-                        <AdCards isbn={ad.Book.Isbn} title={ad.Book.Title} description={ad.Description} id={ad.ID} />
+                        <AdCards isbn={ad.Book.Isbn} title={ad.Book.Title} description={ad.Description} id={ad.ID} price={ad.Price} imageURL={ad.Image} />
                     {/each}
                 {:else}
                     No Results Found

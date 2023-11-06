@@ -5,6 +5,7 @@
 
 <button
     class=" {klass}"
+    on:click
     {...$$restProps}
 >
     <slot />

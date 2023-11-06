@@ -7,6 +7,8 @@
     import Upload from '$lib/images/Upload_fill.png'
 	import { createEventDispatcher } from 'svelte';
 
+    export let searchBarVisible = true;
+
     let searchType  = 'book';
     let searchValue = '';
 
@@ -25,28 +27,30 @@
 
 <div class="navbar">
     <div class="logo">
-		<img src={Logo} alt="logo" width="32px" height="32px" />
+		<a href="/dashboard"><img src={Logo} alt="logo" width="32px" height="32px" /></a>
         <span>RentWave</span>
 	</div>
 
-    <div class="search-bar">
+    {#if searchBarVisible}
+        <div class="search-bar">
 
-        <select class="dropdown" name="type" bind:value={searchType} on:change={onTypeChange}>
-            <option value="book">Books</option>
-            <option value="vehicle">Vehicles</option>
-        </select>
+            <select class="dropdown" name="type" bind:value={searchType} on:change={onTypeChange}>
+                <option value="book">Books</option>
+                <option value="vehicle">Vehicles</option>
+            </select>
 
-        <div class="search-text">
+            <div class="search-text">
 
-            <input placeholder={`Search for a ${searchType}`} bind:value={searchValue} />
-            <img src={Search} alt="Search" on:click|preventDefault={onSearch} />
+                <input placeholder={`Search for a ${searchType}`} bind:value={searchValue} on:keydown={(e) => e.code === 'Enter' && onSearch() } />
+                <button on:click|preventDefault={onSearch} ><img src={Search} alt="Search" /></button>
+
+            </div>
 
         </div>
-
-    </div>
+    {/if}
 
     <div class="actions">
-        <img src={Upload} alt="Upload" on:click={() => goto(`/add/${searchType}`)} />
+        <a href={`/add/${searchType}`}><img src={Upload} alt="Upload" /></a>
         <img src={NotificationBell} alt="Notifications" />
         <img src={Profile} alt="Profile" />
     </div>
